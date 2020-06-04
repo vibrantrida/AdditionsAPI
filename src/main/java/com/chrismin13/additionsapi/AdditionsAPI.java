@@ -178,7 +178,7 @@ public class AdditionsAPI extends JavaPlugin implements Listener {
 
 	public void onDisable() {
 		// Useful when reloading!
-		if (!ConfigFile.getInstance().getConfig().getBoolean("resource-pack.use-minepack"))
+		if (!ConfigFile.getInstance().getConfig().getBoolean("resource-pack.use-dropbox"))
 			ResourcePackServer.stopServer();
 
 		DurabilityBar.removeAllDurabilityBars();

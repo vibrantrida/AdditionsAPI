@@ -15,7 +15,7 @@ import com.chrismin13.additionsapi.files.ConfigFile;
 import com.chrismin13.additionsapi.utils.Debug;
 import com.chrismin13.additionsapi.utils.LangFileUtils;
 
-import me.benfah.cu.init.impl.MinePackInitializationMethod;
+import me.vibrantrida.dropbox.DropboxInitializationMethod;
 
 public class ResourcePackListener implements Listener {
 
@@ -31,7 +31,7 @@ public class ResourcePackListener implements Listener {
 					&& !player.hasPermission(
 							new Permission("additionsapi.resourcepack.disable", PermissionDefault.FALSE))) {
 				String link;
-				if (!ConfigFile.getInstance().getConfig().getBoolean("resource-pack.use-minepack")) {
+				if (!ConfigFile.getInstance().getConfig().getBoolean("resource-pack.use-dropbox")) {
 					if (hostAddress != null && hostAddress.equals("127.0.0.1")) {
 						link = "http://" + ResourcePackServer.localhost + ":" + ResourcePackServer.port
 								+ ResourcePackServer.path;
@@ -40,7 +40,7 @@ public class ResourcePackListener implements Listener {
 								+ ResourcePackServer.path;
 					}
 				} else {
-					link = MinePackInitializationMethod.resourcePack;
+					link = DropboxInitializationMethod.resourcePack;
 				}
 				if (player != null && player.isOnline())
 					if (ResourcePackManager.hasSendWithHash)

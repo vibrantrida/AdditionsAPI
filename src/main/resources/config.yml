@@ -11,7 +11,7 @@
 # ------=======-------=======-------=======-------=======-------=======----- #
 # = #
 # HTTP: 
-# # This is not needed if you are using Minepack!
+# # This is not needed if you are using Dropbox!
 # # Recommended to leave as default, apart from the following values.
 # # localhost: This is picked automatically by default so it does not appear.
 # #            However, if you are having issues with the texture pack, try
@@ -24,7 +24,7 @@
 # ------=======-------=======-------=======-------=======-------=======----- #
 # = #
 # Resource Pack:
-# # use-minepack: Whether the plugin should use the online service Minepack
+# # use-dropbox: Whether the plugin should use the online service Dropbox
 # #               to host the resource pack, rather than the built in
 # #               HTTP File Server.
 # # send-to-player: Whether the player will receive the Resource Pack when
@@ -73,7 +73,8 @@ http:
  numWriteThread: 4
  
 resource-pack:
- use-minepack: true
+ use-dropbox: false
+ dropbox-token:
  send-to-player: true
  force-on-join: true
  overwrite-files: true

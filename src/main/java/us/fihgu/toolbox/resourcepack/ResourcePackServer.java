@@ -10,7 +10,8 @@ import com.chrismin13.additionsapi.AdditionsAPI;
 import com.chrismin13.additionsapi.files.ConfigFile;
 import com.chrismin13.additionsapi.utils.Debug;
 
-import me.benfah.cu.init.impl.MinePackInitializationMethod;
+import me.vibrantrida.dropbox.DropboxInitializationMethod;
+import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import us.fihgu.toolbox.http.FileContext;
 import us.fihgu.toolbox.http.HTTPServer;
 import us.fihgu.toolbox.http.StaticContextGenerator;
@@ -51,13 +52,14 @@ public class ResourcePackServer {
 				Paths.get(AdditionsAPI.getInstance().getDataFolder() + "/resource-pack/resource.zip"))));
 
 		if (ConfigFile.getInstance().getConfig().getBoolean("resource-pack.send-to-player")) {
-			if (!ConfigFile.getInstance().getConfig().getBoolean("resource-pack.use-minepack")) {
+			if (!ConfigFile.getInstance().getConfig().getBoolean("resource-pack.use-dropbox")) {
 				server.startServer();
 			} else {
-				MinePackInitializationMethod.uploadResourcePack(
-						new File(AdditionsAPI.getInstance().getDataFolder() + "/resource-pack/resource.zip"));
-				AdditionsAPI.getInstance().getConfig().set("resource-pack.sha1", MinePackInitializationMethod.resourcePackHash);
-				AdditionsAPI.getInstance().getConfig().set("resource-pack.link", MinePackInitializationMethod.resourcePack);
+				DropboxInitializationMethod.uploadResourcePack(
+						new File(AdditionsAPI.getInstance().getDataFolder() + "/resource-pack/resource.zip"),
+						AdditionsAPI.getInstance().getConfig().getString("resource-pack.dropbox-token"));
+				AdditionsAPI.getInstance().getConfig().set("resource-pack.sha1", DropboxInitializationMethod.resourcePackHash);
+				AdditionsAPI.getInstance().getConfig().set("resource-pack.link", DropboxInitializationMethod.resourcePack);
 			}
 		}
 	}
