@@ -33,15 +33,16 @@ public class DropboxInitializationMethod {
                 FileMetadata metadata = dropboxClient.files().uploadBuilder("/" + f.getName())
                         .withMode(WriteMode.OVERWRITE)
                         .uploadAndFinish(in);
-                try {
-                    // get existing shared link
-                    ListSharedLinksResult sharedLinksResult = dropboxClient.sharing().listSharedLinksBuilder()
-                            .withPath("/" + f.getName())
-                            .withDirectOnly(true)
-                            .start();
 
+                // check for any existing shared links
+                ListSharedLinksResult sharedLinksResult = dropboxClient.sharing().listSharedLinksBuilder()
+                        .withPath("/" + f.getName())
+                        .withDirectOnly(true)
+                        .start();
+
+                if (sharedLinksResult.getLinks().size() > 0) {
                     resourcePack = sharedLinksResult.getLinks().get(0).getUrl();
-                } catch (DbxException e) {
+                } else {
                     // shared link doesn't exist, create one
                     SharedLinkSettings linkSettings = SharedLinkSettings.newBuilder()
                             .withRequestedVisibility(RequestedVisibility.PUBLIC)
@@ -51,11 +52,13 @@ public class DropboxInitializationMethod {
 
                     resourcePack = sharedLinkMetadata.getUrl();
                 }
+
                 // change url to direct url
                 if (resourcePack.endsWith("0")) {
                     resourcePack = resourcePack.substring(0, resourcePack.length() - 1) + "1";
                 }
-                resourcePackHash = DigestUtils.sha1Hex(in).toString();
+
+                resourcePackHash = DigestUtils.sha1Hex(in);
             } catch (DbxException | IOException e) {
                 e.printStackTrace();
             }
